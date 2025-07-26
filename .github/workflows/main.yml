@@ -1,4 +1,4 @@
-name: RDP
+name: RDP via Cloudflare
 
 on: [workflow_dispatch]
 
@@ -7,15 +7,12 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Set Password
+    - name: Set RDP Password
       run: net user runneradmin P@ssw0rd123
 
-    - name: Install Ngrok
+    - name: Install Cloudflared
       run: |
-        Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
-        Expand-Archive ngrok.zip -DestinationPath ngrok
-        dir ngrok
-        .\ngrok\ngrok.exe authtoken 30OuiNU7msRUIqfezB65GExaqfl_imxSWSqTJ8frFRfJzGD3
+        Invoke-WebRequest https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe -OutFile cloudflared.exe
 
-    - name: Start Ngrok Tunnel
-      run: .\ngrok\ngrok.exe tcp 3389
+    - name: Start Cloudflare Tunnel
+      run: .\cloudflared.exe tunnel --url tcp://localhost:3389
