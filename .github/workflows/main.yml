@@ -13,8 +13,8 @@ jobs:
     - name: Install Ngrok
       run: |
         Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
-        Expand-Archive ngrok.zip
-        ./ngrok/authtoken 30OuiNU7msRUIqfezB65GExaqfl_imxSWSqTJ8frFRfJzGD3
+        Expand-Archive ngrok.zip -DestinationPath .
+        .\ngrok\ngrok.exe authtoken 30OuiNU7msRUIqfezB65GExaqfl_imxSWSqTJ8frFRfJzGD3
 
     - name: Start Ngrok Tunnel
-      run: ./ngrok/ngrok tcp 3389
+      run: .\ngrok\ngrok.exe tcp 3389
